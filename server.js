@@ -5,7 +5,6 @@ const logger = require('morgan')
 // const multer = require('multer')
 // const path = require('path')
 const http = require('http')
-// const socketIO = require('socket.io')
 
 require('dotenv').config()
 
@@ -18,17 +17,7 @@ let app = express()
 
 const server = http.createServer(app)
 
-// const io = socketIO(server)
-
-// global.io = io
-
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-})
-mongoose.Promise = global.Promise
+mongoose.connect(MONGODB_URI)
 
 let db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
@@ -70,16 +59,6 @@ app.use(
 
 // const upload = multer({ storage })
 // global.upload = upload
-
-// app.set('view engine', 'pug')
-// app.set('views', './views')
-
-// io.on('connection', client => {
-//   console.log('Client connected.')
-//   client.on('disconnect', () => {
-//     console.log('Client disconnected.')
-//   })
-// })
 
 app.use('/', require('./routes'))
 
